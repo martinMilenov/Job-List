@@ -3,7 +3,7 @@ import TableRow from './TableRow';
 import SearchInput from './SearchInput';
 import './Table.css';
 
-const Table = ({ data, handleDelete }) => {
+const Table = ({ data, handleDelete, handleUpdatePriority }) => {
   const [search, setSearch] = useState('');
 
   const handleSearchChange = (e) => {
@@ -23,12 +23,17 @@ const Table = ({ data, handleDelete }) => {
   const filteredData = sortedData.filter((item) =>
     item.job.match(new RegExp(search, 'i'))
   );
-  console.log(filteredData);
+
   return (
     <section>
       <SearchInput search={search} onInputChange={handleSearchChange} />
       {filteredData.map((el, i) => (
-        <TableRow key={el.id} {...el} handleDelete={handleDelete} />
+        <TableRow
+          key={el.id}
+          {...el}
+          handleDelete={handleDelete}
+          handleUpdatePriority={handleUpdatePriority}
+        />
       ))}
     </section>
   );

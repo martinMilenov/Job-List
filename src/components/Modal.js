@@ -6,7 +6,7 @@ import './Modal.css';
 const Modal = ({ title, content, onDismiss, onSuccess }) => {
   return ReactDOM.createPortal(
     <div className="modal-background">
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-container">
         <div className="close-modal" onClick={onDismiss}>
           X
         </div>

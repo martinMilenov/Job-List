@@ -9,7 +9,13 @@ const priorityColorMapper = {
   trivial: 'blue',
 };
 
-const TableRow = ({ job, priority, id, handleDelete }) => {
+const TableRow = ({
+  job,
+  priority,
+  id,
+  handleDelete,
+  handleUpdatePriority,
+}) => {
   const [inputValue, setInputValue] = useState(priority);
   const [currentPriority, setCurrentPriority] = useState(priority);
   const [showModal, setShowModal] = useState(false);
@@ -20,6 +26,7 @@ const TableRow = ({ job, priority, id, handleDelete }) => {
 
   const handleUpdate = () => {
     setCurrentPriority(inputValue);
+    handleUpdatePriority(id, inputValue);
     setShowModal(false);
   };
 

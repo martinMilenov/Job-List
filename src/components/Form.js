@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import './Form.css';
 import Select from './Select';
 
-const Form = ({ job, priority, handleChange, handleCreate, errors }) => {
+const Form = ({ handleCreate }) => {
+  const [formValues, setFormValues] = useState({
+    job: '',
+    priority: '',
+  });
+  const [errors, setErrors] = useState({});
+
   const selectError = Object.entries(errors).find(
     ([key, value]) => key === 'priority'
   );
@@ -9,6 +16,47 @@ const Form = ({ job, priority, handleChange, handleCreate, errors }) => {
   const inputError = Object.entries(errors).find(
     ([key, value]) => key === 'job'
   );
+
+  const validateFields = (job, priority) => {
+    const regex = /^[a-zA-Z\s]*$/;
+    let errors = {};
+
+    if (!job) {
+      errors = { ...errors, job: 'This field is required' };
+    } else if (job.length > 70) {
+      errors = { ...errors, job: 'Exceed maximum characters' };
+    } else if (!new RegExp(regex).test(job)) {
+      errors = { ...errors, job: 'Incorect field format' };
+    }
+
+    if (!priority) {
+      errors = { ...errors, priority: 'This field is required' };
+    }
+
+    return errors;
+  };
+
+  const handleChange = (e) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleCreateJob = () => {
+    const { job, priority } = formValues;
+
+    const errors = validateFields(job, priority);
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
+
+    handleCreate(job, priority);
+    setFormValues({ job: '', priority: '' });
+    setErrors({});
+  };
 
   return (
     <form>
@@ -19,7 +67,7 @@ const Form = ({ job, priority, handleChange, handleCreate, errors }) => {
           type="text"
           name="job"
           id="job"
-          value={job}
+          value={formValues.job}
           onChange={handleChange}
         />
         {inputError?.length > 0 && (
@@ -28,14 +76,14 @@ const Form = ({ job, priority, handleChange, handleCreate, errors }) => {
       </div>
       <Select
         label="Priority"
-        priority={priority}
+        priority={formValues.priority}
         handleChange={handleChange}
         selectError={selectError}
       />
       <button
         style={{ marginTop: '20px' }}
         type="button"
-        onClick={handleCreate}
+        onClick={handleCreateJob}
       >
         Create
       </button>
