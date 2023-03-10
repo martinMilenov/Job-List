@@ -1,0 +1,19 @@
+.input-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.search-input {
+  width: 80px;
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  color: #333;
+  background-color: #333;
+}
