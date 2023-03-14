@@ -17,7 +17,6 @@ const TableRow = ({
   handleUpdatePriority,
 }) => {
   const [inputValue, setInputValue] = useState(priority);
-  const [currentPriority, setCurrentPriority] = useState(priority);
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
@@ -25,7 +24,6 @@ const TableRow = ({
   };
 
   const handleUpdate = () => {
-    setCurrentPriority(inputValue);
     handleUpdatePriority(id, inputValue);
     setShowModal(false);
   };
@@ -33,11 +31,11 @@ const TableRow = ({
   return (
     <>
       <div
-        style={{ backgroundColor: priorityColorMapper[currentPriority] }}
+        style={{ backgroundColor: priorityColorMapper[priority] }}
         className="table-row"
       >
         <div>{job}</div>
-        <div style={{ textTransform: 'capitalize' }}>{currentPriority}</div>
+        <div style={{ textTransform: 'capitalize' }}>{priority}</div>
         <div>
           <button
             style={{ marginRight: '10px' }}
@@ -60,7 +58,6 @@ const TableRow = ({
             />
           }
           title={job}
-          priority={priority}
         />
       )}
     </>
