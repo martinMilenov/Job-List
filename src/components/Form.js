@@ -21,7 +21,7 @@ const Form = ({ handleCreate }) => {
     const regex = /^[a-zA-Z\s]*$/;
     let errors = {};
 
-    if (!job) {
+    if (!job || !job.trim()) {
       errors = { ...errors, job: 'This field is required' };
     } else if (job.length > 70) {
       errors = { ...errors, job: 'Exceed maximum characters' };
